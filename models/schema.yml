@@ -40,3 +40,26 @@ models:
           - relationships:
               to: ref('stg_customers')
               field: customer_id
+
+  - name: stg_stripe__payments
+    description: This model contains customer payment data from Stripe
+    columns:
+      - name: payment_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: payment_method
+      - name: status
+        tests:
+          - accepted_values:
+              values:
+                ["success", "fail"]
+      - name: amount
+      - name: created_at
